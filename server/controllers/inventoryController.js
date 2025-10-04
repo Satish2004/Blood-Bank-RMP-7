@@ -13,7 +13,6 @@ const createInventoryController = async (req, res) => {
     if (inventoryType === "out") {
       const organisation = new mongoose.Types.ObjectId(userId);
 
-      // calculate total blood
       const totalIn =
         (
           await inventoryModel.aggregate([
@@ -31,12 +30,11 @@ const createInventoryController = async (req, res) => {
         )[0]?.total || 0;
 
       const available = totalIn - totalOut;
-      if (available < quantity) {
+      if (available < quantity)
         return res.status(400).json({
           success: false,
           message: `Only ${available} ML of ${bloodGroup} available`,
         });
-      }
 
       req.body.hospital = user._id;
     } else if (inventoryType === "in") {
@@ -51,7 +49,7 @@ const createInventoryController = async (req, res) => {
   }
 };
 
-// GET ALL INVENTORY for organisation
+// GET ALL INVENTORY
 const getInventoryController = async (req, res) => {
   try {
     const { userId } = req.query;
@@ -79,7 +77,7 @@ const getDonarsController = async (req, res) => {
   }
 };
 
-// ✅ GET HOSPITALS (newly created)
+// GET HOSPITALS
 const getHospitalsController = async (req, res) => {
   try {
     const { userId } = req.query;
@@ -93,7 +91,7 @@ const getHospitalsController = async (req, res) => {
   }
 };
 
-// GET ORGANISATION
+// GET ORGANISATION (for donor)
 const getOrganisationController = async (req, res) => {
   try {
     const { userId } = req.query;
@@ -109,7 +107,7 @@ const getOrganisationController = async (req, res) => {
   }
 };
 
-// GET ORGANISATION for hospital
+// GET ORGANISATION (for hospital)
 const getOrganisationForHospitalController = async (req, res) => {
   try {
     const { userId } = req.query;
@@ -128,9 +126,7 @@ const getOrganisationForHospitalController = async (req, res) => {
 // GET INVENTORY HOSPITAL
 const getInventoryHospitalController = async (req, res) => {
   try {
-    // Use query params instead of req.body
-    const { userId, inventoryType, donar } = req.query;
-
+    const { userId, inventoryType, donar } = req.query; // use query
     const query = { hospital: userId };
     if (inventoryType) query.inventoryType = inventoryType;
     if (donar) query.donar = donar;

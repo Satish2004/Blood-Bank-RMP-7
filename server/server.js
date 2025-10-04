@@ -15,7 +15,7 @@ app.use(morgan("dev"));
 
 app.use(
   cors({
-    origin: "http://localhost:3001",
+    origin: "http://localhost:3001", // frontend port
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
@@ -31,7 +31,7 @@ app.get("/", (req, res) => {
   res.send("Backend working");
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on PORT ${PORT}`);
 });
