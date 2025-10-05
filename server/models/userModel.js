@@ -41,7 +41,7 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      minlength: [6, "password must be at least 6 characters"],
+
       required: [true, "password is required"],
     },
     website: {
@@ -52,7 +52,7 @@ const userSchema = new mongoose.Schema(
       required: [true, "address is required"],
     },
     phone: {
-      type: int,
+      type: String,
       required: [true, "phone number is required"],
     },
   },

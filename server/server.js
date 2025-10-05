@@ -9,29 +9,23 @@ connectDB();
 
 const app = express();
 
-// Middlewares
 app.use(express.json());
 app.use(morgan("dev"));
 
 app.use(
   cors({
-    origin: "http://localhost:3001", // frontend port
+    origin: "http://localhost:3001",
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
-// Routes
 app.use("/api/v1/auth", require("./routes/authRoutes"));
 app.use("/api/v1/inventory", require("./routes/inventoryRoutes"));
+app.use("/api/v1/admin", require("./routes/adminRoutes"));
 
-// Test route
-app.get("/", (req, res) => {
-  res.send("Backend working");
-});
+app.get("/", (req, res) => res.send("Backend working fine"));
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server is running on PORT ${PORT}`);
-});
+app.listen(PORT, () => console.log(`Server running on PORT ${PORT}`));

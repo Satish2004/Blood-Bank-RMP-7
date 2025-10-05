@@ -5,23 +5,20 @@ const {
   getOrganisationList,
   deleteUser,
 } = require("../controllers/adminController");
-const adminMiddelware = require("../middlewares/adminMiddelware");
-const authMiddelware = require("../middlewares/authMiddelware");
+const adminMiddleware = require("../middlewares/adminMiddleware");
+const authMiddleware = require("../middlewares/authMiddleware");
 
 const router = express.Router();
 
-// Admin routes
-router.get("/donar-list", authMiddelware, adminMiddelware, getDonarList);
-router.get("/hospital-list", authMiddelware, adminMiddelware, getHospitalList);
+// Admin-only routes
+router.get("/donar-list", authMiddleware, adminMiddleware, getDonarList);
+router.get("/hospital-list", authMiddleware, adminMiddleware, getHospitalList);
 router.get(
   "/organisation-list",
-  authMiddelware,
-  adminMiddelware,
+  authMiddleware,
+  adminMiddleware,
   getOrganisationList
 );
-
-// =================== Delete ==================================================
-// delete donar
-router.delete("/delete-user/:id", authMiddelware, adminMiddelware, deleteUser);
+router.delete("/delete-user/:id", authMiddleware, adminMiddleware, deleteUser);
 
 module.exports = router;
